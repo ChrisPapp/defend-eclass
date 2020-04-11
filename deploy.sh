@@ -1,0 +1,1 @@
+rsync -avu --exclude='.git*' . pappabakaliatis@pappabakaliatis.csec.gr:/var/www/eclass/pappabakaliatis.csec.gr/
