@@ -192,6 +192,10 @@ if (!isset($submit)) {
 	$authmethods = array("2","3","4","5");
 	$uname = escapeSimple($uname);  // escape the characters: simple and double quote
 	$password = escapeSimpleSelect($password);  // escape the characters: simple and double quote
+	$prenom_form = escapeSimple($prenom_form);
+	$email = escapeSimple($email);
+	$department = escapeSimple($department);
+	$am = escapeSimple($am);
 	if(!in_array($auth,$authmethods)) {
 		$password_encrypted = md5($password);
 	} else {

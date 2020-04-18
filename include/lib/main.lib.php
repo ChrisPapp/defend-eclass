@@ -176,19 +176,18 @@ function escapeSimple($str)
 	global $db;
 	if (get_magic_quotes_gpc())
 	{
-		return $str;
+		stripslashes($str);
+	}
+
+	if (function_exists('mysql_real_escape_string'))
+	{
+		return @mysql_real_escape_string($str, $db);
 	}
 	else
 	{
-		if (function_exists('mysql_real_escape_string'))
-		{
-			return @mysql_real_escape_string($str, $db);
-		}
-		else
-		{
-			return @mysql_escape_string($str);
-		}
+		return @mysql_escape_string($str);
 	}
+
 }
 
 function escapeSimpleSelect($str)
