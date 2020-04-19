@@ -117,11 +117,15 @@ if(empty($search_terms_title) && empty($search_terms_keywords) && empty($search_
 		//$mycours, emfanise thn eggrafh
 		if($show_entry)
 		{
-		  if ($k%2==0) {
-	        $tbl_content .= "\n    <tr>";
-	      } else {
-	        $tbl_content .= "\n    <tr class=\"odd\">";
-          }
+			$mycours['code'] = q($mycours['code']);
+			$mycours['intitule'] = q($mycours['intitule']);
+			$mycours['course_keywords'] = q($mycours['course_keywords']);
+			$mycours['titulaires'] = q($mycours['titulaires']);
+			if ($k%2==0) {
+				$tbl_content .= "\n    <tr>";
+			} else {
+				$tbl_content .= "\n    <tr class=\"odd\">";
+			}
             $tbl_content .= "\n      <td><img src=\"../../template/classic/img/arrow_grey.gif\" alt=\"\" border=\"0\" /></td>";
             $tbl_content .= "\n      <td><a href=\"../../courses/".$mycours['code']."/\">".$mycours['intitule']."</a> (".$mycours['code'].")</td>";
             $tbl_content .= "\n      <td>".$mycours['titulaires']."</td>";
