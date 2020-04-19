@@ -165,7 +165,7 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 		##[END personalisation modification]############
 	}  // end of user authentication
 } 
-	
+printSession();
 if (isset($_SESSION['uid'])) { 
 	$uid = $_SESSION['uid'];
 } else { 

@@ -210,8 +210,8 @@ if (!isset($submit)) {
 	$result=mysql_query("SELECT user_id, nom, prenom FROM `$mysqlMainDb`.user WHERE user_id='$last_id'");
 	while ($myrow = mysql_fetch_array($result)) {
 		$uid=$myrow[0];
-		$nom=$myrow[1];
-		$prenom=$myrow[2];
+		$nom=q($myrow[1]);
+		$prenom=q($myrow[2]);
 	}
 	mysql_query("INSERT INTO `$mysqlMainDb`.loginout (loginout.idLog, loginout.id_user, loginout.ip, loginout.when, loginout.action)
 	VALUES ('', '".$uid."', '".$REMOTE_ADDR."', NOW(), 'LOGIN')");
@@ -219,7 +219,7 @@ if (!isset($submit)) {
 	$_SESSION['statut'] = 5;
 	$_SESSION['prenom'] = $prenom;
 	$_SESSION['nom'] = $nom;
-	$_SESSION['uname'] = $uname;
+	$_SESSION['uname'] = q($uname);
 	
 	// registration form
 	$tool_content .= "<table width='99%'><tbody><tr>" .

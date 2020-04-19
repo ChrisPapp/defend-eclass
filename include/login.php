@@ -41,10 +41,10 @@ if ($uname == escapeSimpleSelect($myrow["username"]))
 		}
 		if($is_active == 1) {
 			$uid = $myrow["user_id"];
-			$nom = $myrow["nom"];
-			$prenom = $myrow["prenom"];
+			$nom = q($myrow["nom"]);
+			$prenom = q($myrow["prenom"]);
 			$statut = $myrow["statut"];
-			$email = $myrow["email"];
+			$email = q($myrow["email"]);
 			$userPerso = $myrow["perso"];
 			$language = $_SESSION['langswitch'] = langcode_to_name($myrow["lang"]);
 			$auth_allow = 1;
