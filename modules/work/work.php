@@ -885,6 +885,8 @@ cData;
 		$i = 1;
 		while ($row = mysql_fetch_array($result))
 		{
+			$row['comments'] = q($row['comments']);
+
 			//is it a group assignment?
 			if (!empty($row['group_id'])) {
 				$subContentGroup = "($m[groupsubmit] ".
@@ -902,8 +904,9 @@ cData;
 				<a href='grade_edit.php?assignment=$id&submission=$row[id]'>".
 				$m['comments']."</a> (+)";
 			}
-			$uid_2_name = uid_to_name($row['uid']);
+			$uid_2_name = q(uid_to_name($row['uid']));
 			$stud_am = mysql_fetch_array(db_query("SELECT am from $mysqlMainDb.user WHERE user_id = '$row[uid]'"));
+			$stud_am[0] = q($stud_am[0]);
 			$tool_content .= <<<cData
 
       <tr>
