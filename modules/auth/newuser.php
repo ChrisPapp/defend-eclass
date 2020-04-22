@@ -193,6 +193,7 @@ if (!isset($submit)) {
 	$uname = escapeSimple($uname);  // escape the characters: simple and double quote
 	$password = escapeSimpleSelect($password);  // escape the characters: simple and double quote
 	$prenom_form = escapeSimple($prenom_form);
+	$nom_form = escapeSimple($nom_form);
 	$email = escapeSimple($email);
 	$department = escapeSimple($department);
 	$am = escapeSimple($am);
