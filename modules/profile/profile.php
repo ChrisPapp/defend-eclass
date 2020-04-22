@@ -83,6 +83,10 @@ if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
 		$langcode = langname_to_code($language);
 
 		$username_form = escapeSimple($username_form);
+		$prenom_form = escapeSimple($prenom_form);
+		$nom_form = escapeSimple($nom_form);
+		$email_form = escapeSimple($email_form);
+		$am_form = escapeSimple($am_form);
 		if(mysql_query("UPDATE user
 	        SET nom='$nom_form', prenom='$prenom_form',
 	        username='$username_form', email='$email_form', am='$am_form',
@@ -166,12 +170,12 @@ $sqlGetInfoUser ="SELECT nom, prenom, username, password, email, am, perso, lang
 $result=mysql_query($sqlGetInfoUser);
 $myrow = mysql_fetch_array($result);
 
-$nom_form = $myrow['nom'];
-$prenom_form = $myrow['prenom'];
-$username_form = $myrow['username'];
+$nom_form = q($myrow['nom']);
+$prenom_form = q($myrow['prenom']);
+$username_form = q($myrow['username']);
 $password_form = $myrow['password'];
-$email_form = $myrow['email'];
-$am_form = $myrow['am'];
+$email_form = q($myrow['email']);
+$am_form = q($myrow['am']);
 ##[BEGIN personalisation modification, added 'personalisation on SELECT]############
 $persoStatus=	$myrow['perso'];
 $userLang = $myrow['lang'];
