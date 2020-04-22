@@ -74,18 +74,22 @@ hContent;
 include_once("./config.php");
 include("functions.php");
 
+$post_id = escapeSimple($post_id);
+$forum = escapeSimple($forum);
+$topic = escapeSimple($topic);
+
 if (isset($post_id) && $post_id) {
 	// We have a post id, so include that in the checks..
 	$sql  = "SELECT f.forum_type, f.forum_name, f.forum_access, t.topic_title ";
 	$sql .= "FROM forums f, topics t, posts p ";
-	$sql .= "WHERE (f.forum_id = '$forum') AND (t.topic_id = $topic)";
-	$sql .= " AND (p.post_id = $post_id) AND (t.forum_id = f.forum_id)";
+	$sql .= "WHERE (f.forum_id = '$forum') AND (t.topic_id = '$topic')";
+	$sql .= " AND (p.post_id = '$post_id') AND (t.forum_id = f.forum_id)";
 	$sql .= " AND (p.forum_id = f.forum_id) AND (p.topic_id = t.topic_id)";
 } else {
 	// No post id, just check forum and topic.
 	$sql = "SELECT f.forum_type, f.forum_name, f.forum_access, t.topic_title ";
 	$sql .= "FROM forums f, topics t ";
-	$sql .= "WHERE (f.forum_id = '$forum') AND (t.topic_id = $topic) AND (t.forum_id = f.forum_id)";	
+	$sql .= "WHERE (f.forum_id = '$forum') AND (t.topic_id = '$topic') AND (t.forum_id = f.forum_id)";
 }
 
 $result = db_query($sql, $currentCourseID);
@@ -145,7 +149,7 @@ if (isset($submit) && $submit) {
 	$poster_ip = $REMOTE_ADDR;
 	$is_html_disabled = false;
 	if ( (isset($allow_html) && $allow_html == 0) || isset($html)) {
-		$message = htmlspecialchars($message);
+		$message = q($message);
 		$is_html_disabled = true;
 		if (isset($quote) && $quote) {
 			$edit_by = get_syslang_string($sys_lang, "l_editedby");
@@ -159,8 +163,8 @@ if (isset($submit) && $submit) {
 	}
 	$message = format_message($message);
 	$time = date("Y-m-d H:i");
-	$nom = addslashes($nom);
-	$prenom = addslashes($prenom);
+	$nom = escapeSimple($nom);
+	$prenom = escapeSimple($prenom);
 
 	//to prevent [addsig] from getting in the way, let's put the sig insert down here.
 	if (isset($sig) && $sig) {
@@ -171,8 +175,8 @@ if (isset($submit) && $submit) {
 	$result = db_query($sql, $currentCourseID);
 	$this_post = mysql_insert_id();
 	if ($this_post) {
-		$sql = "INSERT INTO posts_text (post_id, post_text) VALUES ($this_post, " .
-                        autoquote($message) . ")";
+		$sql = "INSERT INTO posts_text (post_id, post_text) VALUES ($this_post, '" .
+                        escapeSimple($message) . "')";
 		$result = db_query($sql, $currentCourseID); 
 	}
 	$sql = "UPDATE topics SET topic_replies = topic_replies+1, topic_last_post_id = $this_post, topic_time = '$time' 
