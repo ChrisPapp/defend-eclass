@@ -38,6 +38,7 @@ check_guest();
 $allow_username_change = !get_config('block-username-change');
 
 if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
+	validate_token();
         if (!$allow_username_change) {
                 $username_form = $uname;
         }
@@ -221,8 +222,8 @@ if ((!isset($changePass)) || isset($_POST['submit'])) {
 	}
 	$tool_content .= " <li><a href='../unreguser/unreguser.php'>$langUnregUser</a></li>";
 	$tool_content .= "</ul></div>";
-	$tool_content .= "<form method=\"post\" action=\"$sec?submit=yes\"><br/>
-    <table width=\"99%\">
+	$tool_content .= "<form method=\"post\" action=\"$sec?submit=yes\"><br/>".csrf_token_input().
+    "<table width=\"99%\">
     <tbody><tr>
        <th width=\"220\" class='left'>$langName</th>";
 
