@@ -221,6 +221,9 @@ if (!isset($submit)) {
 	$_SESSION['prenom'] = $prenom;
 	$_SESSION['nom'] = $nom;
 	$_SESSION['uname'] = q($uname);
+	if (empty($_SESSION['token'])) {
+		$_SESSION['token'] = generate_csrf_token();
+	}
 	
 	// registration form
 	$tool_content .= "<table width='99%'><tbody><tr>" .

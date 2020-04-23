@@ -1284,3 +1284,21 @@ function register_posted_variables($var_array)
         }
         return $all_set;
 }
+
+require_once "/var/www/eclass/pappabakaliatis.csec.gr/lib/random.php";
+function generate_csrf_token() {
+	try {
+		$string = random_bytes(32);
+	} catch (TypeError $e) {
+		// Well, it's an integer, so this IS unexpected.
+		die("An unexpected error has occurred"); 
+	} catch (Error $e) {
+		// This is also unexpected because 32 is a reasonable integer.
+		die("An unexpected error has occurred");
+	} catch (Exception $e) {
+		// If you get this message, the CSPRNG failed hard.
+		die("Could not generate a random string. Is our OS secure?");
+	}
+	
+	return bin2hex($string);
+}
