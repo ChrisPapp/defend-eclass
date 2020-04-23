@@ -1302,3 +1302,16 @@ function generate_csrf_token() {
 	
 	return bin2hex($string);
 }
+
+function csrf_token_input() {
+	if (!isset($_SESSION['token'])) {
+		die("Not safe");
+	}
+	return "<input type='hidden' name='csrf_token' value='$_SESSION[token]'></input>";
+}
+
+function validate_token() {
+	if (empty($_POST['csrf_token']) || ($_SESSION['token'] === $_POST['token'])) {
+			die("<img style='display:block; height:100%; margin-left:auto; margin-right:auto;' src='https://media1.tenor.com/images/0a691bb0ff447ac0a6a3b1e3bfa46265/tenor.gif?itemid=14584391'></img>");
+	}
+}
