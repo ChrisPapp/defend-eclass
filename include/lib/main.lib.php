@@ -1311,7 +1311,8 @@ function csrf_token_input() {
 }
 
 function validate_token() {
-	if (empty($_POST['csrf_token']) || ($_SESSION['token'] === $_POST['token'])) {
+	if (empty($_POST['csrf_token']) || ($_SESSION['token'] !== $_POST['csrf_token'])) {
+			// die($_POST['csrf_token']. " - ".$_SESSION['token']);
 			die("<img style='display:block; height:100%; margin-left:auto; margin-right:auto;' src='https://media1.tenor.com/images/0a691bb0ff447ac0a6a3b1e3bfa46265/tenor.gif?itemid=14584391'></img>");
 	}
 }

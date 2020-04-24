@@ -58,51 +58,54 @@ define('MESSAGE_LINE_NB',  40);
 define('MAX_LINE_IN_FILE', 80);
 
 if ($GLOBALS['language'] == 'greek')
-	$timeNow = date("d-m-Y / H:i",time());
+$timeNow = date("d-m-Y / H:i",time());
 else
-	$timeNow = date("Y-m-d / H:i",time());
+$timeNow = date("Y-m-d / H:i",time());
 
 if (!file_exists($fileChatName)) {
 	$fp = fopen($fileChatName, 'w')
-		or die ('<center>$langChatError</center>');
+	or die ('<center>$langChatError</center>');
 	fclose($fp);
 }
 
-// chat commands
-
-// reset command
-if (isset($_GET['reset']) && $is_adminOfCourse) {
-	$fchat = fopen($fileChatName,'w');
-	fwrite($fchat, $timeNow." ---- ".$langWashFrom." ---- ".$nick." --------\n");
-	fclose($fchat);
-	@unlink($tmpArchiveFile);
-}
-
-// store
-if (isset($_GET['store']) && $is_adminOfCourse) {
-	$saveIn = "chat.".date("Y-m-j-B").".txt";
-	$chat_filename = date("YmdGis").randomkeys("8").".txt";
-
-	buffer(implode('', file($fileChatName)), $tmpArchiveFile);
-	if (copy($tmpArchiveFile, $pathToSaveChat.$chat_filename)) {
-                $alert_div=$langSaveMessage;
-        } else {
-                $alert_div= $langSaveErrorMessage;
-        }
-	echo $alert_div;
-	db_query("INSERT INTO document SET path='/$chat_filename', filename='$saveIn',
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	
+	validate_token();
+	// chat commands
+	
+	// reset command
+	if (isset($_POST['reset']) && $is_adminOfCourse) {
+		$fchat = fopen($fileChatName,'w');
+		fwrite($fchat, $timeNow." ---- ".$langWashFrom." ---- ".$nick." --------\n");
+		fclose($fchat);
+		@unlink($tmpArchiveFile);
+	}
+	
+	// store
+	if (isset($_POST['store']) && $is_adminOfCourse) {
+		$saveIn = "chat.".date("Y-m-j-B").".txt";
+		$chat_filename = date("YmdGis").randomkeys("8").".txt";
+		
+		buffer(implode('', file($fileChatName)), $tmpArchiveFile);
+		if (copy($tmpArchiveFile, $pathToSaveChat.$chat_filename)) {
+			$alert_div=$langSaveMessage;
+		} else {
+			$alert_div= $langSaveErrorMessage;
+		}
+		echo $alert_div;
+		db_query("INSERT INTO document SET path='/$chat_filename', filename='$saveIn',
 		date=NOW(), date_modified=NOW()", $currentCourseID);
-	exit;
+		exit;
+	}
+	
+	// add new line
+	if (isset($chatLine) and trim($chatLine) != '') {
+		$fchat = fopen($fileChatName,'a');
+		$chatLine = mathfilter($chatLine, 12, '../../courses/mathimg/');
+		fwrite($fchat,$timeNow.' - '.$nick.' : '.stripslashes($chatLine)."\n");
+		fclose($fchat);
+	}
 }
-
-// add new line
-if (isset($chatLine) and trim($chatLine) != '') {
-	$fchat = fopen($fileChatName,'a');
-	$chatLine = mathfilter($chatLine, 12, '../../courses/mathimg/');
-	fwrite($fchat,$timeNow.' - '.$nick.' : '.stripslashes($chatLine)."\n");
-	fclose($fchat);
-}
-
 // display message list
 $fileContent  = file($fileChatName);
 
@@ -118,7 +121,7 @@ foreach ($fileReverse as $thisLine) {
 	if (strpos($newline, '</span>') === false) {
 		$newline .= '</span>';
 	}
- 	echo '<div><span>', $newline, "</div>\n";
+	echo '<div><span>', $newline, "</div>\n";
 }
 
 echo "</body></html>\n";

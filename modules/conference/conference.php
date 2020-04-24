@@ -88,8 +88,9 @@ if ($is_adminOfCourse) {
 }
 
 $tool_content .= "
-<form name='chatForm' action='messageList.php' method='get' target='messageList' onSubmit='return prepare_message();'>
-  <table width='99%' class='FormData'>
+<form name='chatForm' action='messageList.php' method='POST' target='messageList' onSubmit='return prepare_message();'>".
+csrf_token_input().
+"<table width='99%' class='FormData'>
   <thead>
   <tr>
     <th>&nbsp;</th>
