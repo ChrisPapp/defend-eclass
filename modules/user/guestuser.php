@@ -37,6 +37,7 @@ $tool_content = "";
 // IF PROF ONLY
 if ($is_adminOfCourse) {
         if (isset($_POST['submit'])) {
+                validate_token();
                 $password = autounquote($_POST['guestpassword']);
                 createguest($default_guest_username, $cours_id, $password);
                 $tool_content .= "<p class='success_small'>$langGuestSuccess<br />" .
@@ -56,9 +57,9 @@ if ($is_adminOfCourse) {
                 }
 
                 $tool_content .= "
-                        <form method='post' action='$_SERVER[PHP_SELF]'>
-
-                        <table class='FormData'>
+                        <form method='post' action='$_SERVER[PHP_SELF]'>".
+                        csrf_token_input().
+                       "<table class='FormData'>
                         <tbody>
                         <tr>
                         <th width='220'>&nbsp;</th>
