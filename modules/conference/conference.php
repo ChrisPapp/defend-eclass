@@ -75,16 +75,28 @@ function prepare_message()
 	document.chatForm.msg.focus();
 	return true;
 }
+
+function do_command(command){
+  let inp = document.createElement(\'input\');
+  inp.name = command;
+  inp.value = "true";
+  inp.type = "hidden";
+  document.chatForm.appendChild(inp);
+  document.chatForm.submit();
+}
 </script>';
 
 if ($is_adminOfCourse) {
     $tool_content .= "
-      <div id=\"operations_container\">
+    <form action='messageList.php' method='POST' target='messageList' onSubmit='return prepare_message();'>".
+    csrf_token_input().
+    " <div id=\"operations_container\">
         <ul id=\"opslist\">
-          <li><a href='messageList.php?reset=true' target='messageList' class=small_tools>$langWash</a></li>
-          <li><a href='messageList.php?store=true' target='messageList' class=small_tools>$langSave</a></li>
+          <li><a style='cursor: pointer;' onclick='do_command(\"reset\")' target='messageList' class=small_tools>$langWash</a></li>
+          <li><a style='cursor: pointer;' onclick='do_command(\"store\")' target='messageList' class=small_tools>$langSave</a></li>
         </ul>
-      </div>";
+      </div>
+    </form>";
 }
 
 $tool_content .= "
