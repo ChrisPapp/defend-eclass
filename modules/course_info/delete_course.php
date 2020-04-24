@@ -63,7 +63,7 @@ if($is_adminOfCourse) {
 		</tr>
 		<tr>
 		<th rowspan='2' class='left' width='220'>$langConfirmDel :</th>
-		<td width='52' align='center'><a href=\"".$_SERVER['PHP_SELF']."?delete=yes\"&csrf_token=$token>$langYes</a></td>
+		<td width='52' align='center'><a href=\"".$_SERVER['PHP_SELF']."?delete=yes&csrf_token=$token\">$langYes</a></td>
 		<td><small>$langByDel</small></td>
 		</tr>
 		<tr>
