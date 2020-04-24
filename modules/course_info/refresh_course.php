@@ -51,6 +51,7 @@ if (!$is_adminOfCourse)
 }
 
 if(isset($submit)) {
+	validate_token();
 	$output = array();
 	mysql_select_db($mysqlMainDb);
 	if (isset($delusers))
@@ -84,9 +85,9 @@ if(isset($submit)) {
 } else {
 
 	$tool_content .= "
-<form action='refresh_course.php' method='post'>
-
-    <table width=\"99%\" class=\"FormData\">
+<form action='refresh_course.php' method='post'>".
+csrf_token_input().
+   "<table width=\"99%\" class=\"FormData\">
     <tbody>
     <tr>
       <th width='220'>&nbsp;</th>

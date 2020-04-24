@@ -33,6 +33,7 @@ $tool_content = "";
 
 if($is_adminOfCourse) {
 	if(isset($delete)) {
+		validate_token();
 		mysql_select_db("$mysqlMainDb",$db);
 		mysql_query("DROP DATABASE `$currentCourseID`");
 		mysql_query("DELETE FROM `$mysqlMainDb`.cours WHERE code='$currentCourseID'");
@@ -51,6 +52,7 @@ if($is_adminOfCourse) {
 		draw($tool_content, 1);
 		exit();
 	} else {
+		$token = generate_csrf_token();
 		$tool_content .= "
 		<table width=\"99%\">
 		<tbody>
@@ -61,7 +63,7 @@ if($is_adminOfCourse) {
 		</tr>
 		<tr>
 		<th rowspan='2' class='left' width='220'>$langConfirmDel :</th>
-		<td width='52' align='center'><a href=\"".$_SERVER['PHP_SELF']."?delete=yes\">$langYes</a></td>
+		<td width='52' align='center'><a href=\"".$_SERVER['PHP_SELF']."?delete=yes\"&csrf_token=$token>$langYes</a></td>
 		<td><small>$langByDel</small></td>
 		</tr>
 		<tr>

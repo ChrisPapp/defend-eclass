@@ -57,6 +57,7 @@ $head_content = <<<hContent
 hContent;
 
 if (isset($_POST['submit'])) {
+        validate_token();
         if (empty($_POST['title'])) {
                 $tool_content .= "<p class='caution_small'>$langNoCourseTitle<br />
                                   <a href='$_SERVER[PHP_SELF]'>$langAgain</a></p><br />";
@@ -163,7 +164,9 @@ if (isset($_POST['submit'])) {
 		$checkpasssel = empty($password)? '': " checked='1'";
 
 		@$tool_content .="
-		<form method='post' action='$_SERVER[PHP_SELF]'>
+                <form method='post' action='$_SERVER[PHP_SELF]'> "
+                .csrf_token_input().
+                "
 		<table width='99%' align='left'>
 		<thead><tr>
 		<td>
