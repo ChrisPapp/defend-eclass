@@ -79,7 +79,8 @@ include("functions.php"); // application logic for phpBB
  * Actual code starts here
  *****************************************************************************/
 
-$sql = "SELECT forum_name, forum_access, forum_type FROM forums
+$forum = escapeSimple($forum);
+$sql = "SELECT forum_name, forum_access, forum_type, forum_id FROM forums
 	WHERE (forum_id = '$forum')";
 if (!$result = db_query($sql, $currentCourseID)) {
 	$tool_content .= $langErrorDataForum;
@@ -87,10 +88,10 @@ if (!$result = db_query($sql, $currentCourseID)) {
 	exit;
 }
 $myrow = mysql_fetch_array($result);
-$forum_name = $myrow["forum_name"];
-$forum_access = $myrow["forum_access"];
-$forum_type = $myrow["forum_type"];
-$forum_id = $forum;
+$forum_name = q($myrow["forum_name"]);
+$forum_access = q($myrow["forum_access"]);
+$forum_type = q($myrow["forum_type"]);
+$forum_id = q($myrow["forum_id"]);
 
 $nameTools = $langNewTopic;
 $navigation[]= array ("url"=>"index.php", "name"=> $langForums);
