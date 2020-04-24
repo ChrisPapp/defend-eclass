@@ -272,6 +272,10 @@ $tool_content .= "</thead>\n";
 
 while ($myrow = mysql_fetch_array($result)) {
         // bi colored table
+        $myrow['nom'] = q($myrow['nom']);
+        $myrow['prenom'] = q($myrow['prenom']);
+        $myrow['email'] = q($myrow['email']);
+        $myrow['am'] = q($myrow['am']);
         if ($i%2 == 0) {
                 $tool_content .= "<tr>";
         } else {
