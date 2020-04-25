@@ -39,7 +39,8 @@ $tool_content = "";
 if($is_adminOfCourse) {
 
     $tool_content .= "
-    <form method=\"post\" action=\"".$_SERVER['PHP_SELF']."\" enctype=\"multipart/form-data\">";
+	<form method=\"post\" action=\"".$_SERVER['PHP_SELF']."\" enctype=\"multipart/form-data\">";
+	$tool_content .= csrf_token_input();
 	$tool_content .= <<<tCont2
 
     <table width="99%" class="FormData">
@@ -81,6 +82,7 @@ if(!empty($search_uname)) {
 }
 // added by jexi
 if (!empty($users_file)) {
+	validate_token();
 	$tmpusers=trim($_FILES['users_file']['name']);
 	$tool_content .= <<<tCont3
 		<table width=99%>
