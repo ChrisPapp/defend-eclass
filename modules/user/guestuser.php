@@ -38,8 +38,8 @@ $tool_content = "";
 if ($is_adminOfCourse) {
         if (isset($_POST['submit'])) {
                 validate_token();
-                $password = autounquote($_POST['guestpassword']);
-                createguest($default_guest_username, $cours_id, $password);
+                $password = escapeSimple($_POST['guestpassword']);
+                createguest($default_guest_username, $cours_id, '$password');
                 $tool_content .= "<p class='success_small'>$langGuestSuccess<br />" .
                                  "<a href='user.php'>$langBackUser</a></p>";
         } else {
