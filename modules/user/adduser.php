@@ -41,9 +41,10 @@ $tool_content="";
 if($is_adminOfCourse) {
 
 if (isset($add)) {
+	validate_token();
 	mysql_select_db($mysqlMainDb);
 	$result = db_query("INSERT INTO cours_user (user_id, cours_id, statut, reg_date) ".
-		"VALUES ('".mysql_escape_string($add)."', $cours_id, ".
+		"VALUES ('".escapeSimple($add)."', $cours_id, ".
 		"'5', CURDATE())");
 
 		$tool_content .= "<p class=\"success_small\">";
@@ -96,13 +97,13 @@ tCont;
 	mysql_select_db($mysqlMainDb);
 	$search=array();
 	if(!empty($search_nom)) {
-		$search[] = "u.nom LIKE '".mysql_escape_string($search_nom)."%'";
+		$search[] = "u.nom LIKE '".escapeSimple($search_nom)."%'";
 	}
 	if(!empty($search_prenom)) {
-		$search[] = "u.prenom LIKE '".mysql_escape_string($search_prenom)."%'";
+		$search[] = "u.prenom LIKE '".escapeSimple($search_prenom)."%'";
 	}
 	if(!empty($search_uname)) {
-		$search[] = "u.username LIKE '".mysql_escape_string($search_uname)."%'";
+		$search[] = "u.username LIKE '".escapeSimple($search_uname)."%'";
 	}
 
 	$query = join(' AND ', $search);
@@ -130,6 +131,9 @@ tCont;
 tCont3;
 			$i = 1;
 			while ($myrow = mysql_fetch_array($result)) {
+				$myrow['nom'] = q($myrow['nom']);
+				$myrow['prenom'] = q($myrow['prenom']);
+				$myrow['username'] =  q($myrow['username']);
 				if ($i % 2 == 0) {
 					$tool_content .= "<tr>";
 		        	} else {
@@ -138,7 +142,7 @@ tCont3;
 				$tool_content .= "<td align=\"right\">$i.</td><td>$myrow[prenom]</td>
       				<td>$myrow[nom]</td><td>$myrow[username]</td>
       				<td align=\"center\">
-				<a href=\"$_SERVER[PHP_SELF]?add=$myrow[user_id]\">$langRegister</a></td></tr>\n";
+				<a href=\"$_SERVER[PHP_SELF]?add=$myrow[user_id]&csrf_token=$_SESSION[token]\">$langRegister</a></td></tr>\n";
 				$i++;
 			}
 			$tool_content .= "</tbody>";
