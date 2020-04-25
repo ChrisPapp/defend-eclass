@@ -308,8 +308,8 @@ while ($myrow = mysql_fetch_array($result)) {
 
         // ************** tutor, admin and unsubscribe (admin only) ******************************
         if(isset($status) && ($status["$currentCourseID"]=='1' OR $status["$currentCourseID"]=='2')) {
+                $token = $_SESSION['token'];
                 // tutor right
-                $token = generate_csrf_token();
                 if ($myrow['tutor'] == '0') {
                         $tool_content .= "<td valign='top' align='center' class='add_user'><a href='$_SERVER[PHP_SELF]?giveTutor=$myrow[user_id]&csrf_token=$token' title='$langGiveTutor'>$langAdd</a></td>";
                 } else {

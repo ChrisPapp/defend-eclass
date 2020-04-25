@@ -52,7 +52,7 @@ if($is_adminOfCourse) {
 		draw($tool_content, 1);
 		exit();
 	} else {
-		$token = generate_csrf_token();
+		$token = $_SESSION['token'];
 		$tool_content .= "
 		<table width=\"99%\">
 		<tbody>
