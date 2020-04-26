@@ -134,7 +134,7 @@ function getUserNameFromId ($id)  // RH: Mailing: return 'Mailing ' + id
     if ($mailingId > 0) return $dropbox_lang["mailingAsUsername"] . $mailingId;
 
     $sql = "SELECT CONCAT(nom,' ', prenom) AS name
-		FROM `" . $dropbox_cnf["userTbl"] . "` WHERE user_id='" . addslashes($id) . "'";
+		FROM `" . $dropbox_cnf["userTbl"] . "` WHERE user_id='" . escapeSimple($id) . "'";
     $result = db_query($sql, $mysqlMainDb);
     $res = mysql_fetch_array($result);
     if ($res == FALSE) return FALSE;
