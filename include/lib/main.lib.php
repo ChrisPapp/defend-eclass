@@ -1314,6 +1314,10 @@ function validate_token() {
 	$token = $_SERVER['REQUEST_METHOD'] === 'POST' ? $_POST['csrf_token'] : $_GET['csrf_token'];
 	if (empty($token) || ($_SESSION['token'] !== $token)) {
 			// die($_POST['csrf_token']. " - ".$_SESSION['token']);
-			die("<img style='display:block; height:100%; margin-left:auto; margin-right:auto;' src='https://media1.tenor.com/images/0a691bb0ff447ac0a6a3b1e3bfa46265/tenor.gif?itemid=14584391'></img>");
+			die(get_error_msg());
 	}
+}
+
+function get_error_msg() {
+	return "<img style='display:block; height:100%; margin-left:auto; margin-right:auto;' src='https://media1.tenor.com/images/0a691bb0ff447ac0a6a3b1e3bfa46265/tenor.gif?itemid=14584391'></img>";
 }
