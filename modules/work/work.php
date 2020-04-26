@@ -185,6 +185,7 @@ if ($is_adminOfCourse) {
 	}
 } else {
 	if (isset($id)) {
+		$id = intval($id);
 		if (isset($work_submit)) {
 			$nameTools = $m['SubmissionStatusWorkInfo'];
 			$navigation[] = array("url"=>"work.php", "name"=> $langWorks);
