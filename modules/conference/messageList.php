@@ -45,8 +45,9 @@ include '../../include/lib/textLib.inc.php';
 include('../../include/phpmathpublisher/mathpublisher.php');
 
 $coursePath=$webDir."courses";
-$fileChatName   = $coursePath.'/'.$currentCourseID.'.chat.txt';
-$tmpArchiveFile = $coursePath.'/'.$currentCourseID.'.tmpChatArchive.txt';
+$magicKey = "TO KSERO OTI EINAI KAKO, ALLA EINAI 12 PARA 20, ";
+$fileChatName   = $coursePath.'/'.md5($magicKey.$currentCourseID).'.chat.txt';
+$tmpArchiveFile = $coursePath.'/'.md5($magicKey.$currentCourseID).'.tmpChatArchive.txt';
 $pathToSaveChat = $coursePath.'/'.$currentCourseID.'/document/';
 
 $nick = uid_to_name($uid);
