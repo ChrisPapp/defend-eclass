@@ -290,15 +290,17 @@ if (!isset($_GET['mailing']))  // RH: Mailing detail: no received files
         <td width=\"3\"><img src=\"../../template/classic/img/inbox.gif\" title=\"$dropbox_lang[receivedTitle]\" /></td>
         <td>";
 
-		$tool_content .= "<a href='dropbox_download.php?id=".urlencode($w->id)."' target=_blank>".$w->title."</a>";
+		$tool_content .= "<a href='dropbox_download.php?id=".urlencode($w->id)."' target=_blank>".q($w->title)."</a>";
 
 		$fSize = ceil(($w->filesize)/1024);
+		$w->description = q($w->description);
 		$tool_content .= <<<tCont9
         <small>&nbsp;&nbsp;&nbsp;($fSize kB)</small>
         <br />
         <small>$w->description</small>
         </td>
 tCont9;
+        $w->author = q($w->author);
 		$tool_content .= "<td>$w->author</td><td>".$w->uploadDate;
 
 		if ($w->uploadDate != $w->lastUploadDate)
@@ -456,7 +458,9 @@ foreach ($dropbox_person -> sentWork as $w)
 	           $tool_content .= "\n       <tr>";
 	        } else {
 	           $tool_content .= "\n       <tr class=\"odd\">";
-            	}
+				}
+	$w->description = q($w->description);
+	$w->title = q($w->title);
 	$tool_content .= <<<tCont12
 
 		<td width="3"><img src="../../template/classic/img/outbox.gif" title="$w->title" /></td>
@@ -471,6 +475,7 @@ tCont12;
 
 	foreach($w -> recipients as $r)
 	{
+		$r["name"] = q($r["name"]);
 		$tool_content .=  $r["name"] . ", <br>\n";
 	}
 	$tool_content = strrev(substr(strrev($tool_content), 7));

@@ -112,11 +112,11 @@ class Dropbox_Work {
 		if ($GLOBALS['language'] == 'greek') {
 			$sql="SELECT id, DATE_FORMAT(uploadDate, '%d-%m-%Y / %H:%i')
 				FROM `".$dropbox_cnf["fileTbl"]."` 
-				WHERE filename = '".addslashes($this->filename)."'";
+				WHERE filename = '".escapeSimple($this->filename)."'";
 		} else {
 			$sql="SELECT id, DATE_FORMAT(uploadDate, '%Y-%m-d% / %H:%i')
 				FROM `".$dropbox_cnf["fileTbl"]."` 
-				WHERE filename = '".addslashes($this->filename)."'";
+				WHERE filename = '".escapeSimple($this->filename)."'";
 		}
         	$result = db_query($sql,$currentCourseID);
 		$res = mysql_fetch_array($result);
@@ -129,25 +129,25 @@ class Dropbox_Work {
 			$this->id = $res["id"];
 			$this->uploadDate = $res["uploadDate"];
 		    $sql = "UPDATE `".$dropbox_cnf["fileTbl"]."`
-					SET filesize = '".addslashes($this->filesize)."'
-					, title = '".addslashes($this->title)."'
-					, description = '".addslashes($this->description)."'
-					, author = '".addslashes($this->author)."'
-					, lastUploadDate = '".addslashes($this->lastUploadDate)."'
-					WHERE id='".addslashes($this->id)."'";
+					SET filesize = '".escapeSimple($this->filesize)."'
+					, title = '".escapeSimple($this->title)."'
+					, description = '".escapeSimple($this->description)."'
+					, author = '".escapeSimple($this->author)."'
+					, lastUploadDate = '".escapeSimple($this->lastUploadDate)."'
+					WHERE id='".escapeSimple($this->id)."'";
 			$result = db_query($sql);
 		} else {
 			$this->uploadDate = $this->lastUploadDate;
 			$sql="INSERT INTO `".$dropbox_cnf["fileTbl"]."` 
 				(uploaderId, filename, filesize, title, description, author, uploadDate, lastUploadDate)
-				VALUES ('".addslashes($this->uploaderId)."'
-						, '".addslashes($this->filename)."'
-						, '".addslashes($this->filesize)."'
-						, '".addslashes($this->title)."'
-						, '".addslashes($this->description)."'
-						, '".addslashes($this->author)."'
-						, '".addslashes($this->uploadDate)."'
-						, '".addslashes($this->lastUploadDate)."'
+				VALUES ('".escapeSimple($this->uploaderId)."'
+						, '".escapeSimple($this->filename)."'
+						, '".escapeSimple($this->filesize)."'
+						, '".escapeSimple($this->title)."'
+						, '".escapeSimple($this->description)."'
+						, '".escapeSimple($this->author)."'
+						, '".escapeSimple($this->uploadDate)."'
+						, '".escapeSimple($this->lastUploadDate)."'
 						)";
 
         	$result = db_query($sql);		
@@ -160,8 +160,8 @@ class Dropbox_Work {
 		*/
 		$sql="INSERT INTO `".$dropbox_cnf["personTbl"]."` 
 				(fileId, personId)
-				VALUES ('".addslashes($this->id)."'
-						, '".addslashes($this->uploaderId)."'
+				VALUES ('".escapeSimple($this->id)."'
+						, '".escapeSimple($this->uploaderId)."'
 						)";
         $result = db_query($sql);	//if work already exists no error is generated
 	}
@@ -185,13 +185,13 @@ class Dropbox_Work {
 			DATE_FORMAT(uploadDate, '%d-%m-%Y / %H:%i') AS uploadDate, 
 			DATE_FORMAT(lastUploadDate, '%d-%m-%Y / %H:%i') AS lastUploadDate
 			FROM `".$dropbox_cnf["fileTbl"]."`
-			WHERE id='".addslashes($id)."'";
+			WHERE id='".escapeSimple($id)."'";
 	} else {
 		$sql="SELECT uploaderId, filename, filesize, title, description, author,
 			DATE_FORMAT(uploadDate, '%Y-%m-%d / %H:%i') AS uploadDate, 
 			DATE_FORMAT(lastUploadDate, '%Y-%m-%d / %H:%i') AS lastUploadDate
 			FROM `".$dropbox_cnf["fileTbl"]."`
-			WHERE id='".addslashes($id)."'";
+			WHERE id='".escapeSimple($id)."'";
 	}
 	        $result = db_query($sql, $currentCourseID);
 		$res = mysql_fetch_array($result);;
@@ -282,12 +282,12 @@ class Dropbox_SentWork extends Dropbox_Work {
 		foreach ($this->recipients as $rec) {	
 			$sql="INSERT INTO `".$dropbox_cnf["postTbl"]."` 
 				(fileId, recipientId)
-				VALUES ('".addslashes($this->id)."', '".addslashes($rec["id"])."')";
+				VALUES ('".escapeSimple($this->id)."', '".escapeSimple($rec["id"])."')";
 	        $result = db_query($sql,$currentCourseID);	//if work already exists no error is generated
 						
 			//insert entries into person table
 			$sql="INSERT INTO `".$dropbox_cnf["personTbl"]."` (fileId, personId)
-				VALUES ('".addslashes($this->id)."', '".addslashes($rec["id"])."')";
+				VALUES ('".escapeSimple($this->id)."', '".escapeSimple($rec["id"])."')";
         	// RH: do not add recipient in person table if mailing zip or just upload
 			if (!$justSubmit) $result = db_query($sql);	//if work already exists no error is generated
 		}
@@ -316,7 +316,7 @@ class Dropbox_SentWork extends Dropbox_Work {
 		$this->recipients = array();
 		$sql="SELECT recipientId
 				FROM `".$dropbox_cnf["postTbl"]."`
-				WHERE fileId='".addslashes($id)."'";
+				WHERE fileId='".escapeSimple($id)."'";
 	        $result = db_query($sql,$currentCourseID);
 		while ($res = mysql_fetch_array($result)) {
 			/*
@@ -365,7 +365,7 @@ class Dropbox_Person {
 		$sql = "SELECT r.fileId FROM 
 				`".$dropbox_cnf["postTbl"]."` r
 				, `".$dropbox_cnf["personTbl"]."` p
-				WHERE r.recipientId = '".addslashes($this->userId)."' 
+				WHERE r.recipientId = '".escapeSimple($this->userId)."' 
 					AND r.recipientId = p.personId
 					AND r.fileId = p.fileId";
         	$result = db_query($sql, $currentCourseID);
@@ -377,7 +377,7 @@ class Dropbox_Person {
 		* find all entries where this person is the sender/uploader
 		*/
 		$sql = "SELECT f.id FROM `".$dropbox_cnf["fileTbl"]."` f, `".$dropbox_cnf["personTbl"]."` p 
-				WHERE f.uploaderId = '".addslashes($this->userId)."'
+				WHERE f.uploaderId = '".escapeSimple($this->userId)."'
 				AND f.uploaderId = p.personId
 				AND f.id = p.fileId";
         $result = db_query($sql, $currentCourseID);
