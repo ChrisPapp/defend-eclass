@@ -114,6 +114,7 @@ if (!does_exists($forum, $currentCourseID, "forum") || !does_exists($topic, $cur
 }
 
 if (isset($submit) && $submit) {
+	validate_token();
 	if (trim($message) == '') {
 		$tool_content .= $langEmptyMsg;
 		draw($tool_content, 2, 'phpbb', $head_content);
@@ -224,7 +225,7 @@ if (isset($submit) && $submit) {
 } else {
 	// Private forum logic here.
 	if (($forum_type == 1) && !$user_logged_in && !$logging_in) {
-		$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+		$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>".csrf_token_input()."
 		<table align='left' width='99%'>
 		<tr><td>
 		<table width='100%'><tr><td>$langPrivateNotice</td></tr>
@@ -263,7 +264,7 @@ if (isset($submit) && $submit) {
 	<ul id=\"opslist\">
 	<li><a href=\"viewtopic.php?topic=$topic&forum=$forum\" target=\"_blank\">$langTopicReview</a></li>
 	</ul></div><br />";
-	$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+	$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>".csrf_token_input()."
 	<table class=\"FormData\" width=\"99%\">
 	<tbody>
 	<tr>

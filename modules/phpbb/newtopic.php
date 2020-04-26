@@ -103,6 +103,7 @@ if (!does_exists($forum, $currentCourseID, "forum")) {
 }
 
 if (isset($submit) && $submit) {
+	validate_token();
 	$subject = q($subject);
 	if (trim($message) == '' || trim($subject) == '') {
 		$tool_content .= $langEmptyMsg;
@@ -214,7 +215,7 @@ if (isset($submit) && $submit) {
 		draw($tool_content, 2, 'phpbb', $head_content);
 		exit();
 	}
-	$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+	$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>".csrf_token_input()."
 	<table class='FormData' width='99%'>
 	<tbody>
 	<tr>
