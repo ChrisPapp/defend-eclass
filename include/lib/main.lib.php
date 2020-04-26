@@ -161,7 +161,7 @@ function autounquote($s) {
 // Shortcut for htmlspecialchars()
 function q($s)
 {
-	return htmlspecialchars($s, ENT_QUOTES).'HTMLEscaped';
+	return htmlspecialchars($s, ENT_QUOTES);
 }
 
 /*
