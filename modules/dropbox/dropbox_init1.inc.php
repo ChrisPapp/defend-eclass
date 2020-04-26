@@ -163,7 +163,7 @@ function isCourseMember($id)
     global $dropbox_cnf, $dropbox_lang, $mysqlMainDb;
 
     $sql = "SELECT * FROM `" . $dropbox_cnf["courseUserTbl"] . "`
-		WHERE user_id = '" . addslashes( $id) . "' AND cours_id = '" . $dropbox_cnf["cid"] . "'";
+		WHERE user_id = '" . escapeSimple($id) . "' AND cours_id = '" . $dropbox_cnf["cid"] . "'";
     $result = db_query($sql, $mysqlMainDb); 
     if (mysql_num_rows($result) == 1)
     {
