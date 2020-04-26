@@ -1,1 +1,1 @@
-rsync -avu --exclude='.git*' . pappabakaliatis@pappabakaliatis.csec.gr:/var/www/eclass/pappabakaliatis.csec.gr/
+rsync -avu --no-perms --exclude='.git*' . pappabakaliatis@pappabakaliatis.csec.gr:/var/www/eclass/pappabakaliatis.csec.gr/
