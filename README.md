@@ -61,7 +61,7 @@
 *	Υλοποίηση validation
     -	https://github.com/ChrisPapp/defend-eclass/commit/2cf67e9f38715eda5cfb0ab8982ca0546cab7ac8
 *	Επεξεργασία προφίλ
-    -	https://github.com/ChrisPapp/defend-eclass/commit/666fd8381793f6e32ac277e7f7316275e40abcf0 (η πιθανότητα να ξεκινάει ένας 40ψήφιος [commit's SHA] με τον συγκεκριμένο 3ψήφιο και να μην εμφανίζεται κάπου αλλού είναι `p=0.000025359`, αν δεν έχουμε ξεχάσει τελείως τις πιθανότητες που ξέραμε, οπότε παρακαλούμε να συνεκτιμηθεί)
+    -	https://github.com/ChrisPapp/defend-eclass/commit/666fd8381793f6e32ac277e7f7316275e40abcf0 (η πιθανότητα να ξεκινάει ένας 40ψήφιος [commit's SHA] με τον συγκεκριμένο 3ψήφιο και να μην εμφανίζεται κάπου αλλού είναι `p=0.00000642475`, αν δεν έχουμε ξεχάσει τελείως τις πιθανότητες που ξέραμε, οπότε παρακαλούμε να συνεκτιμηθεί)
 *	Τηλεσυνεργασία
     -	https://github.com/ChrisPapp/defend-eclass/commit/9ee686450e60f4a4342f70616ba1e7053096e967
     -	https://github.com/ChrisPapp/defend-eclass/commit/d04b259c673bece0c287645769f4bbb2952c25df
